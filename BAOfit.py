@@ -824,7 +824,7 @@ def sigreg_2dEZ(file):
 	return mar,sigr,map,sigp,np.min(chi2),crp,crp/(sigr*sigp)
 	
 
-def Xism_arat_1C_an(dv,icov,rl,mod,dvb,icovb,rlb,B0=1.,spat=.003,spar=.006,mina=.8,maxa=1.2,nobao='n',Bp=.4,Bt=.4,meth='Powell',bs=8,fout='',dirout='',Nmock=1000,verbose=False):
+def Xism_arat_1C_an(dv,icov,rl,mod,dvb,icovb,rlb,B0=1.,spat=.003,spar=.006,mina=.8,maxa=1.2,nobao='n',Bp=.4,Bt=.4,meth='Powell',fout='',dirout='',Nmock=1000,verbose=False):
 	from time import time
 	import numpy	
 	#from optimize import fmin
@@ -841,11 +841,10 @@ def Xism_arat_1C_an(dv,icov,rl,mod,dvb,icovb,rlb,B0=1.,spat=.003,spar=.006,mina=
 	bb.B0 = B0
 	bb.Bt = 100.
 	bb.mkxi()
-	b.bins = bs
 	t = time()	
 	
 	B = .1
-	chiBmin = 1000
+	chiBmin = 100000
 	while B < 4.:
 		chiB = bb.chi_templ_alphfXX((B,0,0,0,B,0,0,0))
 		if chiB < chiBmin:

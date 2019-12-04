@@ -7,7 +7,7 @@ import numpy as np
 from BAOfit import *
 from matplotlib import pyplot as plt
 
-def DESItest(samp='full'):
+def DESItest(samp='full',covf='full'):
 	'''
 	2D fit from DR12
 	'''
@@ -17,7 +17,7 @@ def DESItest(samp='full'):
 	binc = 0
 	dir = '/Users/ashleyross/Dropbox/DESI/mockxi_fromSA/' 
 	bs = 4. #the bin size
-	c = np.loadtxt(dir+'ELG-rsd-z1z2-0.70-1.10-SDECALS-'+samp+'-mock.cov').transpose()
+	c = np.loadtxt(dir+'ELG-rsd-z1z2-0.70-1.10-SDECALS-'+covf+'-mock.cov').transpose()
 	xi02 = np.loadtxt(dir+'ELG-rsd-z1z2-0.70-1.10-SDECALS-'+samp+'-meanmock.xi02').transpose()
 	d0 = xi02[1]
 	d2 = xi02[2]
@@ -127,11 +127,11 @@ def DESItest(samp='full'):
 
 	invcb = np.linalg.pinv(covmb)#,rcond=1.e-5)
 	mod = 'Challenge_matterpower0.353.06.010.015.00.dat' #BAO template used		
-	fout = 'samp'
+	fout = samp+covf
 	spa = .001
 	mina = .8
 	maxa = 1.2
-	Xism_arat_1C_an(dv,invc,rl,mod,dvb,invcb,rlb,dirout=dir,fout='fout',verbose=True)
+	Xism_arat_1C_an(dv,invc,rl,mod,dvb,invcb,rlb,dirout=dir,fout=fout,verbose=True)
 
 if __name__ == '__main__':
-	DESItest()
+	DESItest('sub')

@@ -1,3 +1,8 @@
+'''
+python implementation of Eisenstein & HU 1998
+taken from code original written by Adam D. Myers before 2009 (!)
+'''
+
 from Cosmo import distance as flatdistance
 from math import *
 from scipy.integrate import romberg

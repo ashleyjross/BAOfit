@@ -38,6 +38,8 @@ def findPolya(H,ci,d):
 def mkxifile_3dewig(sp=1.,v='y',pkfile='Challenge_matterpower',mun=0,beta=0.4,sfog=0,sigz=0,sigt=6.,sigr=10.,sigs=15.):
 	'''
 	create xi0,xi2,xi4 BAO and no BAO templates for use in BAO fitting code
+	the templates are linear+BAO damping with bias = 1 at z = 0
+	just multiply by (bD[z])^2 and amplitudes should be consistent with chosen linear bias at redshift z
 	variables:
 	sp is spacing, default is 1 mpc/h
 	v is printing things, right now only r

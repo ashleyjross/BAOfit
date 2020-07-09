@@ -7,7 +7,7 @@ maxb = 80.
 bs = 5.
 
 data = '/global/project/projectdirs/desi/users/UNIT-BAO-RSD-challenge/UNIT/xi_1Gpc/xil_rsd.txt'
-dva = np.loadtxt(data).transpose()
+d = np.loadtxt(data).transpose()
 dv = [] #empty list to become data vector
 dvb = [] #empty list to become data vector for setting bias prior
 rl = [] #empty list to become list of r values to evaluate model at	

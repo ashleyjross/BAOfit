@@ -78,5 +78,5 @@ fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
 spa = .001
 mina = .8
 maxa = 1.2
-Xism_arat_1C_an(dv,invc,rl,mod,dvb,invcb,rlb,verbose=True)
+bf.Xism_arat_1C_an(dv,invc,rl,mod,dvb,invcb,rlb,verbose=True)
 				

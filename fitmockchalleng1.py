@@ -37,7 +37,7 @@ for i in range(0,len(d[0])):
 
 dv = np.array(dv)
 print(len(dv))
-covm = zeros((len(dv),len(dv))) #will become covariance matrix to be used with data vector
+covm = np.zeros((len(dv),len(dv))) #will become covariance matrix to be used with data vector
 covf = np.loadtxt('/global/project/projectdirs/desi/users/UNIT-BAO-RSD-challenge/EZmocks/xi_EZ_mocks/covariance/cov_matrix_rsd.txt').transpose()
 for i in range(0,len(covf[0])):
 	ind1 = covf[0][i]
@@ -53,8 +53,8 @@ for i in range(0,len(covf[0])):
 			ic2 = len(dv)/2+ind2-len(d[0])-mini	
 		covm[ic1][ic2] = covf[2][i]	
 
-invc = pinv(covm) #the inverse covariance matrix to pass to the code
-covmb = zeros((len(dvb),len(dvb)))
+invc = np.linalg.pinv(covm) #the inverse covariance matrix to pass to the code
+covmb = np.zeros((len(dvb),len(dvb)))
 for i in range(0,len(dvb)):
 	if i < len(dvb)//2:
 		indi = i
@@ -66,7 +66,7 @@ for i in range(0,len(dvb)):
 		else:
 			indj = j-len(dvb)//2+len(covm)//2
 		covmb[i][j] = covm[indi][indj]
-invcb = pinv(covmb)
+invcb = np.linalg.pinv(covmb)
 mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
 fout = ft+zb+bc
 spa = .001

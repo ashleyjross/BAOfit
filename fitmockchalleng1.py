@@ -5,6 +5,7 @@ rmin = 50
 rmax = 150
 maxb = 80.
 bs = 5.
+binc = 0
 
 data = '/global/project/projectdirs/desi/users/UNIT-BAO-RSD-challenge/UNIT/xi_1Gpc/xil_rsd.txt'
 d = np.loadtxt(data).transpose()

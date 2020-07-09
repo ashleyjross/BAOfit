@@ -51,6 +51,7 @@ for i in range(0,len(covf[0])):
 			ic2 = ind2-mini
 		else:
 			ic2 = len(dv)/2+ind2-len(d[0])-mini	
+		print(ic1,ic2,covf[2][i])
 		covm[ic1][ic2] = covf[2][i]	
 
 invc = np.linalg.pinv(covm) #the inverse covariance matrix to pass to the code

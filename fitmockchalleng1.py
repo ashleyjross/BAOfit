@@ -73,8 +73,11 @@ for i in range(0,len(dvb)):
 			indj = j-len(dvb)//2+len(covm)//2
 		covmb[i][j] = covm[indi][indj]
 invcb = np.linalg.pinv(covmb)
-mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
-fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
+#mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
+#fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
+mod = 'Challenge_matterpower0.593.04.07.015.00.dat' #BAO template used		
+fout = 'desi_challeng1_ajr_prerec_00.593.04.07.015.00.00'
+
 spa = .001
 mina = .8
 maxa = 1.2

@@ -16,7 +16,7 @@ rlb  = [] #empty list to become list of r values to evaluate model at for bias p
 mini = 0
 for i in range(0,len(d[0])):
 	r = i*bs+bs/2.+binc
-	if r > min and r < max:
+	if r > rmin and r < rmax:
 		dv.append(d[1][i])
 		rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) #correct for pairs should have slightly larger average pair distance than the bin center
 		rl.append(rbc) 
@@ -27,7 +27,7 @@ for i in range(0,len(d[0])):
 			rlb.append(rbc)
 for i in range(0,len(d[0])):
 	r = i*bs+bs/2.+binc
-	if r > min and r < max:
+	if r > rmin and r < rmax:
 		dv.append(d[2][i])
 		rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.)
 		rl.append(rbc)

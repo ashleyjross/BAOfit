@@ -42,7 +42,7 @@ covf = np.loadtxt('/global/project/projectdirs/desi/users/UNIT-BAO-RSD-challenge
 for i in range(0,len(covf[0])):
 	ind1 = covf[0][i]
 	ind2 = covf[1][i]
-	if ind1 and ind2 < len(d[0])*2:
+	if ind1 < len(d[0])*2 and ind2 < len(d[0])*2:
 		if ind1 < len(d[0]):
 			ic1 = ind1-mini
 		else:
@@ -51,8 +51,9 @@ for i in range(0,len(covf[0])):
 			ic2 = ind2-mini
 		else:
 			ic2 = len(dv)/2+ind2-len(d[0])-mini	
-		print(ic1,ic2,covf[2][i])
-		covm[ic1][ic2] = covf[2][i]	
+		if ic1 > 0 and ic2 > 0:
+			print(ic1,ic2,covf[2][i])
+			covm[ic1][ic2] = covf[2][i]	
 
 invc = np.linalg.pinv(covm) #the inverse covariance matrix to pass to the code
 covmb = np.zeros((len(dvb),len(dvb)))

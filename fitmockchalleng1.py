@@ -56,7 +56,7 @@ for i in range(0,len(covf[0])):
 			ic2 = len(dv)/2+ind2-len(d[0])-mini	
 			r2 = (ind2-len(d[0]))*bs+bs/2.
 		if r1 > rmin and r2 > rmin and r1 < rmax and r2 < rmax:
-			print(ic1,ic2,r1,r2,covf[2][i])
+			#print(ic1,ic2,r1,r2,covf[2][i])
 			covm[int(ic1)][int(ic2)] = covf[2][i]	
 
 invc = np.linalg.pinv(covm) #the inverse covariance matrix to pass to the code
@@ -74,7 +74,7 @@ for i in range(0,len(dvb)):
 		covmb[i][j] = covm[indi][indj]
 invcb = np.linalg.pinv(covmb)
 mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
-fout = ft+zb+bc
+fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
 spa = .001
 mina = .8
 maxa = 1.2

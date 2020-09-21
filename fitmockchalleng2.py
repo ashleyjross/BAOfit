@@ -56,7 +56,7 @@ for i in range(0,len(covf[0])):
 			r2 = ind2*bs+bs/2.
 		else:
 			ic2 = len(dv)/2+ind2-maxind//2-mini	
-			r2 = (ind2-len(d[0]))*bs+bs/2.
+			r2 = (ind2-maxind//2)*bs+bs/2.
 		if r1 > rmin and r2 > rmin and r1 < rmax and r2 < rmax:
 			#print(ic1,ic2,r1,r2,covf[2][i])
 			covm[int(ic1)][int(ic2)] = covf[2][i]	

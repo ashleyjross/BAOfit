@@ -845,7 +845,7 @@ def Xism_arat_1C_an(dv,icov,rl,mod,dvb,icovb,rlb,B0=1.,spat=.003,spar=.006,mina=
 	bb.mkxi()
 	t = time()	
 	
-	B = .1
+	B = .01
 	chiBmin = 100000
 	while B < 4.:
 		chiB = bb.chi_templ_alphfXX((B,0,0,0,B,0,0,0))

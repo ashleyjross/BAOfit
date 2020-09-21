@@ -37,6 +37,7 @@ for i in range(0,len(d[0])):
 
 dv = np.array(dv)
 print(len(dv))
+print(dv)
 covm = np.zeros((len(dv),len(dv))) #will become covariance matrix to be used with data vector
 covf = np.loadtxt('/global/project/projectdirs/desi/users/UNIT-BAO-RSD-challenge/Reconstruction/Stage2/covariances/xi_covariance/cov_matrix_xi-EZmocks-1Gpc_rsd_RecIso_post.txt').transpose()
 maxind = 348
@@ -59,7 +60,7 @@ for i in range(0,len(covf[0])):
 		if r1 > rmin and r2 > rmin and r1 < rmax and r2 < rmax:
 			#print(ic1,ic2,r1,r2,covf[2][i])
 			covm[int(ic1)][int(ic2)] = covf[2][i]	
-
+print(covm)
 invc = np.linalg.pinv(covm) #the inverse covariance matrix to pass to the code
 covmb = np.zeros((len(dvb),len(dvb)))
 for i in range(0,len(dvb)):

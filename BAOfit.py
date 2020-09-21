@@ -881,7 +881,7 @@ def Xism_arat_1C_an(dv,icov,rl,mod,dvb,icovb,rlb,B0=1.,spat=.003,spar=.006,mina=
 		for j in range(0,nat):
 			b.at = mina+spat*j+spat/2.
 			b.mkxi()
-			inl = (B,B0)
+			inl = (b.B0,b.B0)
 			(B,B0) = minimize(b.chi_templ_alphfXX_an,inl,method=meth,options={'disp': False}).x
 			chi = b.chi_templ_alphfXX_an((B,B0))*fac
 			grid[i][j] = chi

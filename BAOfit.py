@@ -125,13 +125,13 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 	dir = 'powerspectra/'
 	if file=='Challenge_matterpower' or file == 'TSPT_out':
 		om = 0.31
-		lam = 1
+		#lam = 1
 		h = .676
 		nindex = ns
 		ombhh = .022
 	if file == 'MICE_matterpower':
 		om = 0.25
-		lam = .75
+		#lam = .75
 		h = .7
 		ombhh = .044*0.7*.7	
 		nindex = .949
@@ -141,7 +141,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 		fo = open('P02'+file+'beta'+str(beta)+'sigs'+str(sfog)+'sigxy'+str(sigt)+'sigz'+str(sigr)+'Sk'+str(sigs)+'.dat','w')
 		fo.write('# k P0 P2 P4 Psmooth0 Psmooth2 Psmooth4 Plin Plinsmooth\n')
 	if file != 'Pk_MICEcosmology_z0_Plin_Pnowig':
-		s = simulate(omega=om,lamda=lam,h=h,nindex=nindex,ombhh=ombhh)
+		s = simulate(omega=om,lamda=1-om,h=h,nindex=nindex,ombhh=ombhh)
 	else:
 		mult = 8.*pi**3.	
 	pl2 = []

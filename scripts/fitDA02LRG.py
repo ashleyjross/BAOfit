@@ -12,8 +12,10 @@ zmin = 0.8
 zmax = 1.1
 bs = 4
 
+Nmock = 500
+
 def get_xi0cov():
-    Nmock = 500
+    
     dirm = '/global/project/projectdirs/desi/users/dvalcin/Mocks/'
     fnm = 'xi_lognormal_lrg_sub_'
     xin0 = np.loadtxt(dirm+fnm+'1.txt')

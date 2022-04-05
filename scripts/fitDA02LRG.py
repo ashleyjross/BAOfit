@@ -3,7 +3,7 @@ import numpy as np
 import os
 from matplotlib import pyplot as plt
 
-rmin = 30
+rmin = 50
 rmax = 150
 maxb = 80.
 bs = 5.

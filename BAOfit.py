@@ -283,6 +283,7 @@ class baofit_iso:
 		self.invt = linalg.pinv(mt)
 		self.ximodmin = 10. #minimum of template
 		self.modl = modl
+		print(self.modl)
 		self.modsmoothl = modsmoothl
 						
 	def wmod(self,r):
@@ -296,7 +297,7 @@ class baofit_iso:
 		if indu >= len(self.modl)-1:
 			#return -5.47608128044e-05,5.7422824622e-06
 			return self.modl[-1]
-		print(self.modl[indu],fac,self.modl[indd],indu,indd)
+		#print(self.modl[indu],fac,self.modl[indd],indu,indd)
 		a = self.modl[indu]*fac+(1.-fac)*self.modl[indd]
 		return a
 

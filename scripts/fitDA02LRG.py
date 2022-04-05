@@ -128,8 +128,10 @@ diag = []
 for i in range(0,len(covm)):
     diag.append(np.sqrt(covm[i][i]))
 diag = np.array(diag)
-plt.plot(rl,rl*diag)
-plt.plot(rl,rl*d[4])
+plt.plot(rl,rl*diag,label='lognormal mocks')
+plt.plot(rl,rl*d[4],label='jack-knife')
+plt.xlabel('s (Mpc/h)')
+plt.ylabel(r's$\sigma$')
 plt.show()
 
 mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
@@ -161,6 +163,6 @@ plt.show()
 plt.errorbar(rl,rl**2.*xid,rl**2*diag,fmt='ro')
 fmod = outdir+'ximodLRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
-plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
+plt.plot(mod[0],mod[0]**2.*mod[2],'k-')
 plt.show()
                 

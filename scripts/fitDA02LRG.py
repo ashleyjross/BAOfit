@@ -60,8 +60,8 @@ covm = get_xi0cov() #will become covariance matrix to be used with data vector
 mod = 'BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat'
 modsm = 'BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat'
 
-lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=50.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
-liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=50.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
+lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
+liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
 
 al = [] #list to be filled with alpha values
 for i in range(0,len(lik)):

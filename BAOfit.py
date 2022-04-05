@@ -283,7 +283,7 @@ class baofit_iso:
 		self.invt = linalg.pinv(mt)
 		self.ximodmin = 10. #minimum of template
 		self.modl = modl
-		print(self.invt)
+		#print(self.invt)
 		self.modsmoothl = modsmoothl
 						
 	def wmod(self,r):

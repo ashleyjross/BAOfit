@@ -296,6 +296,7 @@ class baofit_iso:
 		if indu >= len(self.modl)-1:
 			#return -5.47608128044e-05,5.7422824622e-06
 			return self.modl[-1]
+		print(self.modl[indu],fac,self.modl[indd],indu,indd)
 		a = self.modl[indu]*fac+(1.-fac)*self.modl[indd]
 		return a
 

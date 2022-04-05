@@ -135,7 +135,7 @@ plt.plot(rl,rl*d[4],label='jack-knife')
 plt.xlabel('s (Mpc/h)')
 plt.ylabel(r's$\sigma$')
 plt.legend()
-plt.title('apply a factor '+str(round(cfac,2)+' to the mock cov')
+plt.title('apply a factor '+str(round(cfac,2))+' to the mock cov')
 plt.show()
 
 mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]

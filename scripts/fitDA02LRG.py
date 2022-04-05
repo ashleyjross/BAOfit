@@ -124,7 +124,7 @@ rl = np.array(rl)
 print(rl)
 print(xid)
 covm = get_xi0cov() #will become covariance matrix to be used with data vector
-cfac = 4/3
+cfac = 5/4
 covm *= cfac**2.
 diag = []
 for i in range(0,len(covm)):

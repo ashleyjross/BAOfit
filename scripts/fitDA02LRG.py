@@ -1,6 +1,7 @@
 import BAOfit as bf
 import numpy as np
 import os
+from matplotlib import pyplot as plt
 
 rmin = 50
 rmax = 150
@@ -147,7 +148,7 @@ for i in range(0,len(lik)):
 sigs = sigreg_c12(al,lik)
 print('result is alpha = '+str((sigs[2]+sigs[1])/2.)+'+/-'+str((sigs[2]-sigs[1])/2.))
 
-from matplotlib import pyplot as plt
+
 plt.plot(al,lik-min(lik),'k-',label='BAO template')
 plt.plot(al,liksm-min(lik),'k:',label='no BAO')
 plt.xlabel(r'$\alpha$ (relative isotropic BAO scale)')

@@ -6,6 +6,7 @@ from matplotlib import pyplot as plt
 rmin = 50
 rmax = 150
 maxb = 80.
+binc = 0
 
 zmin = 0.8
 zmax = 1.1

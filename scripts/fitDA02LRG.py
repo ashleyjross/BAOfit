@@ -16,7 +16,7 @@ def get_xi0cov():
     Nmock = 500
     dirm = '/global/project/projectdirs/desi/users/dvalcin/Mocks/'
     fnm = 'xi_lognormal_lrg_sub_'
-    xin0 = np.loadtxt(dirm+fnm+'0.txt')
+    xin0 = np.loadtxt(dirm+fnm+'1.txt')
     nbin = len(xin0)
     print(nbin)
     xiave = np.zeros((nbin))
@@ -24,7 +24,7 @@ def get_xi0cov():
 
     Ntot = 0
     fac = 1.
-    for i in range(0,Nmock):
+    for i in range(1,Nmock):
         nr = str(i)
         xii = np.loadtxt(dirm+fnm+nr+'.txt').transpose()
         xic = xii[1]

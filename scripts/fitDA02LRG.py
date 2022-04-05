@@ -58,7 +58,7 @@ for i in range(0,len(d[0])):
 covm = get_xi0cov() #will become covariance matrix to be used with data vector
 
 mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
-modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpoe()[1]
+modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpose()[1]
 
 lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
 liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=.001,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')

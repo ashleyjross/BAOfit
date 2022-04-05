@@ -63,14 +63,15 @@ modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat')
 spa=.001
 lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
 liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=50,rmax=150,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=80.,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
-
+print(lik)
+print(liksm)
 al = [] #list to be filled with alpha values
 for i in range(0,len(lik)):
     a = .8+spa/2.+spa*i
     al.append(a)
 #below assumes you have matplotlib to plot things, if not, save the above info to a file or something
 from matplotlib import pyplot as plt
-plt.plot(al,lik-min(cl),'k-')
-plt.plot(al,liksm-min(cl),'k:')
+plt.plot(al,lik-min(lik),'k-')
+plt.plot(al,liksm-min(lik),'k:')
 plt.show()
                 

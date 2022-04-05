@@ -44,7 +44,7 @@ def get_xi0cov():
 
 datadir =  '/global/cfs/cdirs/desi/survey/catalogs/DA02/LSS/guadalupe/LSScats/2/xi/'
 
-data = datadir+'xi024LRGDA02'+str(zmin)+str(zmax)+'2_default_FKPlin'+str(bs)+'.dat'
+data = datadir+'xi024LRGDA02_'+str(zmin)+str(zmax)+'2_default_FKPlin'+str(bs)+'.dat'
 d = np.loadtxt(data).transpose()
 xid = d[1]
 rl = []

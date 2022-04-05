@@ -118,16 +118,24 @@ for i in range(0,len(d[0])):
     rl.append(rbc) 
     if rbc > rmin and rbc < rmax:
         nbin += 1
+rl = np.array(rl)
 print(rl)
 print(xid)
 covm = get_xi0cov() #will become covariance matrix to be used with data vector
+diag = []
+for i in range(0,len(covm)):
+    diag.append(np.sqrt(covm[i][i]))
+diag = np.array(diag)
+plt.plot(rl,rl*diag,rl*d[4])
+plt.show()
 
 mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
 modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpose()[1]
 spa=.001
-lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
-print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5))
-liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=os.environ['HOME']+'/DA02baofits/')
+outdir = os.environ['HOME']+'/DA02baofits/'
+lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=outdir)
+print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
+liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=outdir)
 #print(lik)
 #print(liksm)
 al = [] #list to be filled with alpha values
@@ -140,7 +148,15 @@ sigs = sigreg_c12(al,lik)
 print('result is alpha = '+str((sigs[2]+sigs[1])/2.)+'+/-'+str((sigs[2]-sigs[1])/2.))
 
 from matplotlib import pyplot as plt
-plt.plot(al,lik-min(lik),'k-')
-plt.plot(al,liksm-min(lik),'k:')
+plt.plot(al,lik-min(lik),'k-',label='BAO template')
+plt.plot(al,liksm-min(lik),'k:',label='no BAO')
+plt.xlabel(r'$\alpha$ (relative isotropic BAO scale)')
+plt.ylabel(r'$\Delta\chi^{2}$')
+plt.show()
+
+plt.errorbar(rl,rl**2.*d,rl**2*diag,fmt='ro')
+fmod = outdir+'ximodLRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs)+'.dat'
+mod = np.loadtxt(fmod).transpose()
+plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
 plt.show()
                 

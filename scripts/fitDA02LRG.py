@@ -165,5 +165,7 @@ plt.errorbar(rl,rl**2.*xid,rl**2*diag,fmt='ro')
 fmod = outdir+'ximodLRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
+plt.xlim(20,rmax+10)
+plt.ylim(-50,100)
 plt.show()
                 

@@ -391,9 +391,11 @@ class baofit_iso:
 		if wo == 'y':
 			fo.close()		
 		
+		
 		dl = np.zeros((self.nbin))	
 		for i in range(0,self.nbin):
 			dl[i] = self.xim[i]-modl[i]
+		print(self.xim,modl,dl)
 		chit = np.dot(np.dot(dl,self.invt),dl)	
 		return chit
 

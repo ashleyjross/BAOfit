@@ -17,6 +17,7 @@ Nmock = 500
 
 def sigreg_c12(al,chill,fac=1.,md='f'):
 	#report the confidence region +/-1 for chi2
+	#copied from ancient code
 	chim = 1000
 	
 	
@@ -127,7 +128,8 @@ diag = []
 for i in range(0,len(covm)):
     diag.append(np.sqrt(covm[i][i]))
 diag = np.array(diag)
-plt.plot(rl,rl*diag,rl*d[4])
+plt.plot(rl,rl*diag)
+plt.plot(rl,rl*d[4])
 plt.show()
 
 mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
@@ -153,9 +155,10 @@ plt.plot(al,lik-min(lik),'k-',label='BAO template')
 plt.plot(al,liksm-min(lik),'k:',label='no BAO')
 plt.xlabel(r'$\alpha$ (relative isotropic BAO scale)')
 plt.ylabel(r'$\Delta\chi^{2}$')
+plt.legend()
 plt.show()
 
-plt.errorbar(rl,rl**2.*d,rl**2*diag,fmt='ro')
+plt.errorbar(rl,rl**2.*xid,rl**2*diag,fmt='ro')
 fmod = outdir+'ximodLRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')

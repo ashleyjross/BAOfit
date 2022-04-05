@@ -32,7 +32,7 @@ def get_xi0cov():
         Ntot += 1.
     print( Ntot)        
     xiave = xiave/float(Ntot)
-    for i in range(0,Nmock):
+    for i in range(1,Nmock):
         nr = str(i)
         xii = np.loadtxt(dirm+fnm+nr+'.txt').transpose()
         xic = xii[1]

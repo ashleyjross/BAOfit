@@ -135,8 +135,18 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 		h = .7
 		ombhh = .044*0.7*.7	
 		nindex = .949
-
-	f = np.loadtxt(dir+file+'.dat').transpose()
+    if file == 'DESI':
+        from cosmoprimo.fiducial import DESI
+        from cosmoprimo import PowerSpectrumBAOFilter
+        cosmo = DESI()
+        pkz = cosmo.get_fourier().pk_interpolator()
+        pk = pkz.to_1d(z=0)
+        kl = np.loadtxt(dir+'Challenge_matterpower.dat').transpose()[0] #this k spacing is known to work well
+        pkv = pk(kl)
+        pknow = PowerSpectrumBAOFilter(pk, engine='wallish2018').smooth_pk_interpolator()
+        pksmv = pknow(kl)
+	if file != 'DESI':
+	    f = np.loadtxt(dir+file+'.dat').transpose()
 	if pw == 'y':
 		fo = open('P02'+file+'beta'+str(beta)+'sigs'+str(sfog)+'sigxy'+str(sigt)+'sigz'+str(sigr)+'Sk'+str(sigs)+'.dat','w')
 		fo.write('# k P0 P2 P4 Psmooth0 Psmooth2 Psmooth4 Plin Plinsmooth\n')
@@ -163,9 +173,11 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 		d = distance(.25,.75)
 		sigzc = d.cHz(z)*sigz
 	
-	kl = f[0]
-	pml = f[1]
-	norm = pml[0]/s.Psmooth(kl[0],0)
+	norm = 1
+	if file != 'DESI':
+	    kl = f[0]
+	    pml = f[1]
+	    norm = pml[0]/s.Psmooth(kl[0],0)
 	p0l = []
 	p2l = []
 	p4l = []
@@ -175,7 +187,10 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 
 	for i in range(0,len(kl)):
 		k = kl[i]
-		pk = pml[i]*mult
+		if file !='DESI':
+		    pk = pml[i]*mult
+		else:
+		    pk = pkv[i]
 		pk0 = 0
 		pk2 = 0
 		pk4 = 0
@@ -184,6 +199,8 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 		pksm4 = 0
 		if file == 'Pk_MICEcosmology_z0_Plin_Pnowig':
 			pksm = float(f[i].split()[2])*mult
+		elif file == 'DESI':
+		    pksm = pksmv[i]
 		else:	
 			pksm = s.Psmooth(k,0)*norm
 		dpk = pk-pksm

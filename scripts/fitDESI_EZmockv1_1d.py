@@ -16,6 +16,10 @@ zmin = 0.8
 zmax = 1.1
 bs = 4
 
+sfog = 3 #fog velocity term, 3 is kind of cannonical
+dperp = 4 # about right for z ~0.8
+drad = 8 # about right for z ~0.8
+
 Nmock = 1000
 
 def sigreg_c12(al,chill,fac=1.,md='f'):
@@ -74,6 +78,15 @@ def sigreg_c12(al,chill,fac=1.,md='f'):
 	return am,a1d,a1u,a2d,a2u,chim	
 
 
+#make BAO template given parameters above, using DESI fiducial cosmology and cosmoprimo P(k) tools
+#mun is 0 for pre rec
+#sigs is only relevant if mun != 0 and should then be the smoothing scale for reconstructions
+#beta is b/f, so should be changed depending on tracer
+mkxifile_3dewig(sp=1.,v='y',pkfile='DESI',mun=0,beta=0.4,sfog=sfog,sigt=dperp,sigr=drad,sigs=15.)
+
+sys.exit()
+
+#make covariance matrix from EZ mocks
 #def get_xi0cov():
 znm = str(10*zmin)[:1]+str(10*zmax)[:1]
 dirm = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/csaulder/EZmocks/'
@@ -114,20 +127,22 @@ cov = cov/float(Ntot)
 #return cov
 
 #cov = get_xi0cov()
-xistd = []
-covn = np.zeros((len(xiave),len(xiave)))
-for i in range(0,len(xiave)):
-    xistd.append(np.sqrt(cov[i][i]))
-    for j in range(0,len(xiave)):
-        covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
+# xistd = []
+# covn = np.zeros((len(xiave),len(xiave)))
+# for i in range(0,len(xiave)):
+#     xistd.append(np.sqrt(cov[i][i]))
+#     for j in range(0,len(xiave)):
+#         covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
 #plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
 #plt.show()
 #invcov = linalg.inv(cov)
 #plt.imshow(invcov)
-plt.imshow(covn)
+#plt.imshow(covn)
 
-plt.show()
-sys.exit()
+#plt.show()
+#sys.exit()
+
+
 
 datadir =  '/global/cfs/cdirs/desi/survey/catalogs/DA02/LSS/guadalupe/LSScats/2/xi/'
 

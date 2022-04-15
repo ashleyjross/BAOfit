@@ -118,7 +118,7 @@ xistd = []
 covn = np.zeros((len(xiave),len(xiave)))
 for i in range(0,len(xiave)):
     xistd.append(np.sqrt(cov[i][i]))
-    for j in range(0,len(xiave))
+    for j in range(0,len(xiave)):
         covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
 #plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
 #plt.show()

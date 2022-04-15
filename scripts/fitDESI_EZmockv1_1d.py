@@ -86,7 +86,7 @@ def sigreg_c12(al,chill,fac=1.,md='f'):
 #BAO and nowiggle templates get written out for xi0,xi2,xi4 (2D code reconstructions xi(s,mu) from xi0,xi2,xi4)
 bf.mkxifile_3dewig(sp=1.,v='y',pkfile='DESI',mun=0,beta=0.4,sfog=sfog,sigt=dperp,sigr=drad,sigs=15.)
 
-sys.exit()
+#sys.exit()
 
 #make covariance matrix from EZ mocks
 #def get_xi0cov():
@@ -146,48 +146,27 @@ cov = cov/float(Ntot)
 
 
 
-datadir =  '/global/cfs/cdirs/desi/survey/catalogs/DA02/LSS/guadalupe/LSScats/2/xi/'
-
-#data = datadir+'xi024LRGDA02_'+str(zmin)+str(zmax)+'2_default_FKPlin'+str(bs)+'.dat'
-data = datadir +'/smu/xipoles_LRG_'+str(zmin)+'_'+str(zmax)+'_default_FKP_lin'+str(bs)+'_njack120.txt'
-d = np.loadtxt(data).transpose()
-xid = d[2]
-rl = []
+rl = s
 nbin = 0
 for i in range(0,len(d[0])):
     r = i*bs+bs/2.+binc
-    rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) #correct for pairs should have slightly larger average pair distance than the bin center
+    #correct for pairs should have slightly larger average pair distance than the bin center
+    #this assumes mid point of bin is being used and pairs come from full 3D volume
+    rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) 
     rl.append(rbc) 
     if rbc > rmin and rbc < rmax:
         nbin += 1
-rl = np.array(rl)
-print(rl)
-print(xid)
-covm = get_xi0cov() #will become covariance matrix to be used with data vector
-cfac = 5/4
-covm *= cfac**2.
-diag = []
-for i in range(0,len(covm)):
-    diag.append(np.sqrt(covm[i][i]))
-diag = np.array(diag)
-plt.plot(rl,rl*diag,label='lognormal mocks')
-plt.plot(rl,rl*d[5],label='jack-knife')
-plt.xlabel('s (Mpc/h)')
-plt.ylabel(r's$\sigma$')
-plt.legend()
-plt.title('apply a factor '+str(round(cfac,2))+' to the mock error')
-plt.show()
 
-#mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
-#modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpose()[1]
-mod = np.loadtxt('BAOtemplates/xi0DESI0.434815.00.dat').transpose()[1]
-modsm = np.loadtxt('BAOtemplates/xi0smDESI0.434815.00.dat').transpose()[1]
+sbaotemp = str(sfog)+str(dperp)+str(drad)
+mod = np.loadtxt('BAOtemplates/xi0DESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
+modsm = np.loadtxt('BAOtemplates/xi0smDESI'+sbaotemp+'15.00.dat').transpose()[1]
 
 spa=.001
-outdir = os.environ['HOME']+'/DA02baofits/'
-lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=outdir)
+outdir = os.environ['HOME']+'/DESImockbaofits/'
+#get whatever xi you actually want to test here and replace xiave
+lik = bf.doxi_isolike(xiave,cov,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
 print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
-liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktempsm'+str(bs),diro=outdir)
+liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave_smooth_'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
 #print(lik)
 #print(liksm)
 al = [] #list to be filled with alpha values
@@ -208,7 +187,7 @@ plt.legend()
 plt.show()
 
 plt.errorbar(rl,rl**2.*xid,rl**2*diag,fmt='ro')
-fmod = outdir+'ximodLRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs)+'.dat'
+fmod = outdir+'LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
 plt.xlim(20,rmax+10)

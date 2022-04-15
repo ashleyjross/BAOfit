@@ -146,10 +146,10 @@ cov = cov/float(Ntot)
 
 
 
-rl = s
+rl = []
 nbin = 0
-for i in range(0,len(d[0])):
-    r = i*bs+bs/2.+binc
+for i in range(0,len(s)):
+    r = s[i]
     #correct for pairs should have slightly larger average pair distance than the bin center
     #this assumes mid point of bin is being used and pairs come from full 3D volume
     rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) 
@@ -157,6 +157,7 @@ for i in range(0,len(d[0])):
     if rbc > rmin and rbc < rmax:
         nbin += 1
 
+rl = np.array(rl)
 sbaotemp = str(sfog)+str(dperp)+str(drad)
 mod = np.loadtxt('BAOtemplates/xi0DESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
 modsm = np.loadtxt('BAOtemplates/xi0smDESI'+sbaotemp+'15.00.dat').transpose()[1]

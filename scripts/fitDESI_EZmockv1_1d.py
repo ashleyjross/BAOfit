@@ -129,10 +129,10 @@ cov = cov/float(Ntot)
 #return cov
 
 #cov = get_xi0cov()
-# xistd = []
+xistd = []
 # covn = np.zeros((len(xiave),len(xiave)))
-# for i in range(0,len(xiave)):
-#     xistd.append(np.sqrt(cov[i][i]))
+for i in range(0,len(xiave)):
+     xistd.append(np.sqrt(cov[i][i]))
 #     for j in range(0,len(xiave)):
 #         covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
 #plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
@@ -187,7 +187,7 @@ plt.ylabel(r'$\Delta\chi^{2}$')
 plt.legend()
 plt.show()
 
-plt.errorbar(rl,rl**2.*xiave,rl**2*diag,fmt='ro')
+plt.errorbar(rl,rl**2.*xiave,rl**2*np.array(xistd),fmt='ro')
 fmod = outdir+'LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')

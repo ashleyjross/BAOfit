@@ -108,9 +108,10 @@ def get_xi0cov():
 
 datadir =  '/global/cfs/cdirs/desi/survey/catalogs/DA02/LSS/guadalupe/LSScats/2/xi/'
 
-data = datadir+'xi024LRGDA02_'+str(zmin)+str(zmax)+'2_default_FKPlin'+str(bs)+'.dat'
+#data = datadir+'xi024LRGDA02_'+str(zmin)+str(zmax)+'2_default_FKPlin'+str(bs)+'.dat'
+data = datadir +'/smu/xipoles_LRG_'+str(zmin)+'_'+str(zmax)+'_default_FKP_lin'+str(bs)+'_njack120.txt'
 d = np.loadtxt(data).transpose()
-xid = d[1]
+xid = d[2]
 rl = []
 nbin = 0
 for i in range(0,len(d[0])):
@@ -137,8 +138,11 @@ plt.legend()
 plt.title('apply a factor '+str(round(cfac,2))+' to the mock error')
 plt.show()
 
-mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
-modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpose()[1]
+#mod = np.loadtxt('BAOtemplates/xi0Challenge_matterpower0.404.08.015.00.dat').transpose()[1]
+#modsm = np.loadtxt('BAOtemplates/xi0smChallenge_matterpower0.404.08.015.00.dat').transpose()[1]
+mod = np.loadtxt('BAOtemplates/xi0DESI0.434815.00.dat').transpose()[1]
+modsm = np.loadtxt('BAOtemplates/xi0smDESI0.434815.00.dat').transpose()[1]
+
 spa=.001
 outdir = os.environ['HOME']+'/DA02baofits/'
 lik = bf.doxi_isolike(xid,covm,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+str(zmin)+str(zmax)+'bosspktemp'+str(bs),diro=outdir)

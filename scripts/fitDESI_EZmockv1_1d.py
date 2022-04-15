@@ -82,7 +82,7 @@ def get_xi0cov():
     rebinned = result[:(result.shape[0]//bs)*bs:bs]
     ells = 0#(0, 2)
     s, xiell = rebinned(ells=ells, return_sep=True)
-    nbin = len(xiell[0])
+    nbin = len(xiell)
     print(nbin)
     xiave = np.zeros((nbin))
     cov = np.zeros((nbin,nbin))

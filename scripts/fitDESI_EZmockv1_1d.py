@@ -3,6 +3,7 @@ import numpy as np
 import os
 import sys
 from matplotlib import pyplot as plt
+import numpy.linalg as linalg
 
 import pycorr
 
@@ -111,6 +112,14 @@ def get_xi0cov():
     cov = cov/float(Ntot)                   
         
     return cov
+
+cov = get_xi0cov()
+xistd = []
+for i in range(0,len(xiave)):
+    xistd.append(np.sqrt(cov[i][i]))
+plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
+invcov = linalg.inv(cov)
+plt.imshow(invcov)
 
 sys.exit()
 

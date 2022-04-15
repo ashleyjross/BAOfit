@@ -164,6 +164,45 @@ modsm = np.loadtxt('BAOtemplates/xi0smDESI0.4'+sbaotemp+'15.00.dat').transpose()
 
 spa=.001
 outdir = os.environ['HOME']+'/DESImockbaofits/'
+
+#do abacus cut
+
+abdir = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/jmena/'
+xid = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0] #just look at first mock
+
+wo = 'abcutsky0'
+                
+lik = bf.doxi_isolike(xid,cov,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
+print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
+liksm = bf.doxi_isolike(xid,cov,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+wo+'_smooth_'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
+#print(lik)
+#print(liksm)
+al = [] #list to be filled with alpha values
+for i in range(0,len(lik)):
+    a = .8+spa/2.+spa*i
+    al.append(a)
+#below assumes you have matplotlib to plot things, if not, save the above info to a file or something
+
+sigs = sigreg_c12(al,lik)
+print('result is alpha = '+str((sigs[2]+sigs[1])/2.)+'+/-'+str((sigs[2]-sigs[1])/2.))
+
+
+plt.plot(al,lik-min(lik),'k-',label='BAO template')
+plt.plot(al,liksm-min(lik),'k:',label='no BAO')
+plt.xlabel(r'$\alpha$ (relative isotropic BAO scale)')
+plt.ylabel(r'$\Delta\chi^{2}$')
+plt.legend()
+plt.show()
+
+plt.errorbar(rl,rl**2.*xiave,rl**2*np.array(xistd),fmt='ro')
+fmod = outdir+'ximodLRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
+mod = np.loadtxt(fmod).transpose()
+plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
+plt.xlim(20,rmax+10)
+plt.ylim(-50,100)
+plt.show()
+
+
 #get whatever xi you actually want to test here and replace xiave
 lik = bf.doxi_isolike(xiave,cov,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
 print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
@@ -195,40 +234,4 @@ plt.xlim(20,rmax+10)
 plt.ylim(-50,100)
 plt.show()
                 
-#do abacus cut
-
-abdir = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/jmena/'
-xid = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0] #just look at first mock
-
-wt = 'abcutsky0'
-                
-lik = bf.doxi_isolike(xid,cov,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
-print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
-liksm = bf.doxi_isolike(xid,cov,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRG'+wo+'_smooth_'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
-#print(lik)
-#print(liksm)
-al = [] #list to be filled with alpha values
-for i in range(0,len(lik)):
-    a = .8+spa/2.+spa*i
-    al.append(a)
-#below assumes you have matplotlib to plot things, if not, save the above info to a file or something
-
-sigs = sigreg_c12(al,lik)
-print('result is alpha = '+str((sigs[2]+sigs[1])/2.)+'+/-'+str((sigs[2]-sigs[1])/2.))
-
-
-plt.plot(al,lik-min(lik),'k-',label='BAO template')
-plt.plot(al,liksm-min(lik),'k:',label='no BAO')
-plt.xlabel(r'$\alpha$ (relative isotropic BAO scale)')
-plt.ylabel(r'$\Delta\chi^{2}$')
-plt.legend()
-plt.show()
-
-plt.errorbar(rl,rl**2.*xiave,rl**2*np.array(xistd),fmt='ro')
-fmod = outdir+'ximodLRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
-mod = np.loadtxt(fmod).transpose()
-plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
-plt.xlim(20,rmax+10)
-plt.ylim(-50,100)
-plt.show()
                 

@@ -74,46 +74,46 @@ def sigreg_c12(al,chill,fac=1.,md='f'):
 	return am,a1d,a1u,a2d,a2u,chim	
 
 
-def get_xi0cov():
-    znm = str(10*zmin)[:1]+str(10*zmax)[:1]
-    dirm = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/csaulder/EZmocks/'
-    fnm = 'EZmock_results_'+znm
-    result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+'_1.npy')
-    rebinned = result[:(result.shape[0]//bs)*bs:bs]
-    ells = 0#(0, 2)
-    s, xiell = rebinned(ells=ells, return_sep=True)
-    nbin = len(xiell)
-    print(nbin)
-    xiave = np.zeros((nbin))
-    cov = np.zeros((nbin,nbin))
+#def get_xi0cov():
+znm = str(10*zmin)[:1]+str(10*zmax)[:1]
+dirm = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/csaulder/EZmocks/'
+fnm = 'EZmock_results_'+znm
+result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+'_1.npy')
+rebinned = result[:(result.shape[0]//bs)*bs:bs]
+ells = 0#(0, 2)
+s, xiell = rebinned(ells=ells, return_sep=True)
+nbin = len(xiell)
+print(nbin)
+xiave = np.zeros((nbin))
+cov = np.zeros((nbin,nbin))
 
-    Ntot = 0
-    fac = 1.
-    for i in range(1,Nmock):
-        nr = '_'+str(i)
-        result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+nr+'.npy')
-        rebinned = result[:(result.shape[0]//bs)*bs:bs]
-        xic = rebinned(ells=ells)#[0]
-        xiave += xic
-        Ntot += 1.
-    print( Ntot)        
-    xiave = xiave/float(Ntot)
-    for i in range(1,Nmock):
-        nr = '_'+str(i)
-        result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+nr+'.npy')
-        rebinned = result[:(result.shape[0]//bs)*bs:bs]
-        xic = rebinned(ells=ells)#[0]
-        for j in range(0,nbin):
-            xij = xic[j]
-            for k in range(0,nbin):
-                xik = xic[k]
-                cov[j][k] += (xij-xiave[j])*(xik-xiave[k])
+Ntot = 0
+fac = 1.
+for i in range(1,Nmock+1):
+	nr = '_'+str(i)
+	result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+nr+'.npy')
+	rebinned = result[:(result.shape[0]//bs)*bs:bs]
+	xic = rebinned(ells=ells)#[0]
+	xiave += xic
+	Ntot += 1.
+print( Ntot)        
+xiave = xiave/float(Ntot)
+for i in range(1,Nmock+1):
+	nr = '_'+str(i)
+	result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+nr+'.npy')
+	rebinned = result[:(result.shape[0]//bs)*bs:bs]
+	xic = rebinned(ells=ells)#[0]
+	for j in range(0,nbin):
+		xij = xic[j]
+		for k in range(0,nbin):
+			xik = xic[k]
+			cov[j][k] += (xij-xiave[j])*(xik-xiave[k])
 
-    cov = cov/float(Ntot)                   
-        
-    return cov
+cov = cov/float(Ntot)                   
+	
+#return cov
 
-cov = get_xi0cov()
+#cov = get_xi0cov()
 xistd = []
 for i in range(0,len(xiave)):
     xistd.append(np.sqrt(cov[i][i]))

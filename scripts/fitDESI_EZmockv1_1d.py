@@ -194,7 +194,7 @@ plt.ylabel(r'$\Delta\chi^{2}$')
 plt.legend()
 plt.show()
 
-plt.errorbar(rl,rl**2.*xiave,rl**2*np.array(xistd),fmt='ro')
+plt.errorbar(rl,rl**2.*xid,rl**2*np.array(xistd),fmt='ro')
 fmod = outdir+'ximodLRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')

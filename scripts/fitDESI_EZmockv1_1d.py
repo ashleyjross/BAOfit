@@ -160,7 +160,7 @@ for i in range(0,len(s)):
 rl = np.array(rl)
 sbaotemp = str(sfog)+str(dperp)+str(drad)
 mod = np.loadtxt('BAOtemplates/xi0DESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
-modsm = np.loadtxt('BAOtemplates/xi0smDESI'+sbaotemp+'15.00.dat').transpose()[1]
+modsm = np.loadtxt('BAOtemplates/xi0smDESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
 
 spa=.001
 outdir = os.environ['HOME']+'/DESImockbaofits/'

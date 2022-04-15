@@ -187,7 +187,7 @@ plt.ylabel(r'$\Delta\chi^{2}$')
 plt.legend()
 plt.show()
 
-plt.errorbar(rl,rl**2.*xid,rl**2*diag,fmt='ro')
+plt.errorbar(rl,rl**2.*xiave,rl**2*diag,fmt='ro')
 fmod = outdir+'LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
 mod = np.loadtxt(fmod).transpose()
 plt.plot(mod[0],mod[0]**2.*mod[1],'k-')

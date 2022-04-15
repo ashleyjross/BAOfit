@@ -118,9 +118,10 @@ xistd = []
 for i in range(0,len(xiave)):
     xistd.append(np.sqrt(cov[i][i]))
 plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
+plt.show()
 invcov = linalg.inv(cov)
 plt.imshow(invcov)
-
+plt.show()
 sys.exit()
 
 datadir =  '/global/cfs/cdirs/desi/survey/catalogs/DA02/LSS/guadalupe/LSScats/2/xi/'

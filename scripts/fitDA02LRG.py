@@ -131,7 +131,7 @@ for i in range(0,len(covm)):
     diag.append(np.sqrt(covm[i][i]))
 diag = np.array(diag)
 plt.plot(rl,rl*diag,label='lognormal mocks')
-plt.plot(rl,rl*d[4],label='jack-knife')
+plt.plot(rl,rl*d[5],label='jack-knife')
 plt.xlabel('s (Mpc/h)')
 plt.ylabel(r's$\sigma$')
 plt.legend()

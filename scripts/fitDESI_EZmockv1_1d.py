@@ -167,7 +167,7 @@ outdir = os.environ['HOME']+'/DESImockbaofits/'
 #get whatever xi you actually want to test here and replace xiave
 lik = bf.doxi_isolike(xiave,cov,mod,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
 print('minimum chi2 is '+str(min(lik))+' for '+str(nbin-5)+' dof')
-liksm = bf.doxi_isolike(xid,covm,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave_smooth_'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
+liksm = bf.doxi_isolike(xiave,cov,modsm,modsm,rl,bs=bs,rmin=rmin,rmax=rmax,npar=3,sp=1.,Bp=.4,rminb=50.,rmaxb=maxb,spa=spa,mina=.8,maxa=1.2,Nmock=Nmock,v='',wo='LRGEZxiave_smooth_'+str(zmin)+str(zmax)+sbaotemp+str(bs),diro=outdir)
 #print(lik)
 #print(liksm)
 al = [] #list to be filled with alpha values

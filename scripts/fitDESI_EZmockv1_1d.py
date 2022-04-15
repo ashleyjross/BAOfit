@@ -82,6 +82,8 @@ def sigreg_c12(al,chill,fac=1.,md='f'):
 #mun is 0 for pre rec
 #sigs is only relevant if mun != 0 and should then be the smoothing scale for reconstructions
 #beta is b/f, so should be changed depending on tracer
+#sp is the spacing in Mpc/h of the templates that get written out, most of the rest of the code assumes 1
+#BAO and nowiggle templates get written out for xi0,xi2,xi4 (2D code reconstructions xi(s,mu) from xi0,xi2,xi4)
 mkxifile_3dewig(sp=1.,v='y',pkfile='DESI',mun=0,beta=0.4,sfog=sfog,sigt=dperp,sigr=drad,sigs=15.)
 
 sys.exit()

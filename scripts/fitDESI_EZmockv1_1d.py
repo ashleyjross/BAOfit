@@ -115,12 +115,17 @@ cov = cov/float(Ntot)
 
 #cov = get_xi0cov()
 xistd = []
+covn = np.zeros((len(xiave),len(xiave)))
 for i in range(0,len(xiave)):
     xistd.append(np.sqrt(cov[i][i]))
+    for j in range(0,len(xiave))
+        covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
 plt.errorbar(s,s**2.*xiell,s**2.*np.array(xistd))
 plt.show()
-invcov = linalg.inv(cov)
-plt.imshow(invcov)
+#invcov = linalg.inv(cov)
+#plt.imshow(invcov)
+plt.imshow(covn)
+
 plt.show()
 sys.exit()
 

@@ -196,8 +196,8 @@ plt.show()
 
 plt.errorbar(rl,rl**2.*xid,rl**2*np.array(xistd),fmt='ro')
 fmod = outdir+'ximodLRG'+wo+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
-mod = np.loadtxt(fmod).transpose()
-plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
+fitmod = np.loadtxt(fmod).transpose()
+plt.plot(fitmod[0],fitmod[0]**2.*fitmod[1],'k-')
 plt.xlim(20,rmax+10)
 plt.ylim(-50,100)
 plt.show()
@@ -228,8 +228,8 @@ plt.show()
 
 plt.errorbar(rl,rl**2.*xiave,rl**2*np.array(xistd),fmt='ro')
 fmod = outdir+'ximodLRGEZxiave'+str(zmin)+str(zmax)+sbaotemp+str(bs)+'.dat'
-mod = np.loadtxt(fmod).transpose()
-plt.plot(mod[0],mod[0]**2.*mod[1],'k-')
+fitmod = np.loadtxt(fmod).transpose()
+plt.plot(fitmod[0],fitmod[0]**2.*fitmod[1],'k-')
 plt.xlim(20,rmax+10)
 plt.ylim(-50,100)
 plt.show()

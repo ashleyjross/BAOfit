@@ -150,9 +150,9 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
     if pw == 'y':
         fo = open('P02'+file+'beta'+str(beta)+'sigs'+str(sfog)+'sigxy'+str(sigt)+'sigz'+str(sigr)+'Sk'+str(sigs)+'.dat','w')
         fo.write('# k P0 P2 P4 Psmooth0 Psmooth2 Psmooth4 Plin Plinsmooth\n')
-    if file != 'Pk_MICEcosmology_z0_Plin_Pnowig':
+    if file != 'Pk_MICEcosmology_z0_Plin_Pnowig' and file != 'DESI':
         s = simulate(omega=om,lamda=1-om,h=h,nindex=nindex,ombhh=ombhh)
-    else:
+    elif file == 'Pk_MICEcosmology_z0_Plin_Pnowig':
         mult = 8.*pi**3.    
     pl2 = []
     pl4 = []

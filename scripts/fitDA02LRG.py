@@ -72,7 +72,7 @@ def sigreg_c12(al,chill,fac=1.,md='f'):
 
 def get_xi0cov():
     
-    dirm = '/global/project/projectdirs/desi/users/dvalcin/Mocks/'
+    dirm = '/global/project/projectdirs/desi/users/dvalcin/Mocks/2PCF/'
     fnm = 'xi_lognormal_lrg_sub_'
     xin0 = np.loadtxt(dirm+fnm+'1.txt')
     nbin = len(xin0)

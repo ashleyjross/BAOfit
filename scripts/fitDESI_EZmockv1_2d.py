@@ -122,7 +122,7 @@ print(nbin)
 xiave = np.zeros((nbin))
 cov = np.zeros((nbin,nbin))
 nbinb = 2*(indmaxb-indmin)
-print(nbibn)
+print(nbinb)
 xiaveb = np.zeros((nbinb))
 covb = np.zeros((nbinb,nbinb))
 

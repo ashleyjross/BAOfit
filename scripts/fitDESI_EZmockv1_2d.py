@@ -10,8 +10,8 @@ import argparse
 import pycorr
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--zmin", help="minimum redshift",default=0.8,dtype=float)
-parser.add_argument("--zmax", help="maximum redshift",default=1.1,dtype=float)
+parser.add_argument("--zmin", help="minimum redshift",default=0.8,type=float)
+parser.add_argument("--zmax", help="maximum redshift",default=1.1,type=float)
 parser.add_argument("--gentemp", help="whether or not to generate BAO templates",default=False)
 args = parser.parse_args()
 

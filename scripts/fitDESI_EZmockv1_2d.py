@@ -141,7 +141,7 @@ for i in range(1,Nmock+1):
 			cov[j][k] += (xij-xiave[j])*(xik-xiave[k])
 
 cov = cov/float(Ntot)                   
-sc = np.concatenate((s,s))
+sc = np.concatenate((s[indmin:indmax],s[indmin:indmax]))
 #return cov
 
 #cov = get_xi0cov()

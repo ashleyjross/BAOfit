@@ -826,6 +826,84 @@ class baofit3D_ellFull_1cov:
         return chit+BBfac+Btfac
 
 
+def plot_2dlik(file):
+	chicol=2
+	col1name=r'$\alpha_{||}$'
+	col2name=r'$\alpha_{\perp}$'
+
+	d = np.loadtxt(file).transpose()
+	chi2 = d[chicol]
+	prob = np.exp(-0.5*chi2)
+	pnorm = np.sum(prob)
+	ma1 = np.sum(prob*d[0])/pnorm
+	ma2 = np.sum(prob*d[1])/pnorm
+	s1 = np.sum(prob*d[0]**2.)/pnorm
+	s2 = np.sum(prob*d[1]**2.)/pnorm
+	sig1 = np.sqrt(s1-ma1**2.)
+	sig2 = np.sqrt(s2-ma2**2.)
+	crp = np.sum(prob*d[0]*d[1])/pnorm-ma1*ma2
+	w = (chi2-np.min(chi2)) < 1
+	indmin = np.argmin(chi2)
+	print(col1name+'='+str(ma1)+'+/-'+str(sig1))
+	print(col1name+'='+str(ma2)+'+/-'+str(sig2))
+	print('correlation is '+str(crp/(sig1*sig2)))
+
+	#plot 1D
+	vals1 = np.unique(d[0])
+	pv = []
+	for v in vals1:
+		w = d[0] == v
+		pv.append(np.sum(prob[w]))
+	pv = np.array(pv)/np.sum(pv)
+	plt.plot(vals1,pv)
+	plt.xlabel(col1name)
+	plt.ylabel('likelihood (integrates to 1)')
+	xl = [ma1,ma1]
+	yl = [0,np.max(pv)]
+	plt.plot(xl,yl,'k-')
+	xl = [ma1-sig1,ma1-sig1]
+	plt.plot(xl,yl,'k:')
+	xl = [ma1+sig1,ma1+sig1]
+	plt.plot(xl,yl,'k:')
+	plt.show()
+	
+
+	#plot 2D
+	inds = np.argsort(chi2)
+	chi2s = chi2[inds]
+	ps = 0
+	s1 = 0
+	s2 = 0
+	s3 = 0
+	for i in range(0,len(chi2s)):
+		chi = chi2s[i]
+		ps += np.exp(-0.5*chi)/pnorm
+		if ps > 0.68 and s1 ==0:
+			chil1 = chi
+			s1 = 1
+		if ps > 0.95 and s2 ==0:
+			chil2 = chi
+			s2 = 1
+		if ps > 0.999 and s3 ==0:
+			chil3 = chi
+			s3 = 1
+
+	w1 = chi2 < chil1
+	w2 = chi2 < chil2
+	w3 = chi2 < chil3
+	ms = 15
+	plt.plot(d[0][w3],d[1][w3],'sk',label=r'3$\sigma$',ms=ms)
+	plt.plot(d[0][w2],d[1][w2],'sb',label=r'2$\sigma$',ms=ms)
+	plt.plot(d[0][w1],d[1][w1],'sr',label=r'1$\sigma$',ms=ms)
+	plt.xlim(np.min(d[0]),np.max(d[0]))
+	plt.ylim(np.min(d[1]),np.max(d[1]))
+	plt.legend()
+	plt.xlabel(col1name)
+	plt.ylabel(col2name)
+
+	plt.show()
+
+
 
 def sigreg_2dEZ(file):
     d = np.loadtxt(file).transpose()

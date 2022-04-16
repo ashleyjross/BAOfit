@@ -139,7 +139,7 @@ for i in range(1,Nmock+1):
 	xic0b = rebinned(ells=ells)[0][indmin:indmaxb]
 	xic2b = rebinned(ells=ells)[1][indmin:indmaxb]
 	xicb = np.concatenate((xic0b,xic2b))
-	xiaveb += xic
+	xiaveb += xicb
 	Ntot += 1.
 print( Ntot)        
 xiave = xiave/float(Ntot)
@@ -162,7 +162,7 @@ for i in range(1,Nmock+1):
 	for j in range(0,nbinb):
 		xij = xicb[j]
 		for k in range(0,nbinb):
-			xik = xibc[k]
+			xik = xicb[k]
 			covb[j][k] += (xij-xiaveb[j])*(xik-xiaveb[k])
 
 cov = cov/float(Ntot)             

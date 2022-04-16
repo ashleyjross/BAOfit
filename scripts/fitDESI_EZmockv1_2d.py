@@ -9,7 +9,7 @@ import pycorr
 
 rmin = 50
 rmax = 150
-maxb = 80.
+rmaxb = 80.
 binc = 0
 
 zmin = 0.8

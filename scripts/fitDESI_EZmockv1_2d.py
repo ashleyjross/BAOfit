@@ -22,60 +22,6 @@ drad = 8 # about right for z ~0.8
 
 Nmock = 1000
 
-def sigreg_c12(al,chill,fac=1.,md='f'):
-	#report the confidence region +/-1 for chi2
-	#copied from ancient code
-	chim = 1000
-	
-	
-	chil = []
-	for i in range(0,len(chill)):
-		chil.append((chill[i],al[i]))
-		if chill[i] < chim:
-			chim = chill[i]
-			am = al[i]
-			im = i
-	#chim = min(chil)	
-	a1u = 2.
-	a1d = 0
-	a2u = 2.
-	a2d = 0
-	oa = 0
-	ocd = 0
-	s0 = 0
-	s1 = 0
-	for i in range(im+1,len(chil)):
-		chid = chil[i][0] - chim
-		if chid > 1. and s0 == 0:
-			a1u = (chil[i][1]/abs(chid-1.)+oa/abs(ocd-1.))/(1./abs(chid-1.)+1./abs(ocd-1.))
-			s0 = 1
-		if chid > 4. and s1 == 0:
-			a2u = (chil[i][1]/abs(chid-4.)+oa/abs(ocd-4.))/(1./abs(chid-4.)+1./abs(ocd-4.))
-			s1 = 1
-		ocd = chid	
-		oa = chil[i][1]
-	oa = 0
-	ocd = 0
-	s0 = 0
-	s1 = 0
-	for i in range(1,im):
-		chid = chil[im-i][0] - chim
-		if chid > 1. and s0 == 0:
-			a1d = (chil[im-i][1]/abs(chid-1.)+oa/abs(ocd-1.))/(1./abs(chid-1.)+1./abs(ocd-1.))
-			s0 = 1
-		if chid > 4. and s1 == 0:
-			a2d = (chil[im-i][1]/abs(chid-4.)+oa/abs(ocd-4.))/(1./abs(chid-4.)+1./abs(ocd-4.))
-			s1 = 1
-		ocd = chid	
-		oa = chil[im-i][1]
-	if a1u < a1d:
-		a1u = 2.
-		a1d = 0
-	if a2u < a2d:
-		a2u = 2.
-		a2d = 0
-			
-	return am,a1d,a1u,a2d,a2u,chim	
 
 
 #make BAO template given parameters above, using DESI fiducial cosmology and cosmoprimo P(k) tools
@@ -153,7 +99,7 @@ for i in range(1,Nmock+1):
 	xic = np.concatenate((xic0,xic2))
 	xic0b = rebinned(ells=ells)[0][indmin:indmaxb]
 	xic2b = rebinned(ells=ells)[1][indmin:indmaxb]
-	xicb = np.concatenate((xic0,xic2))
+	xicb = np.concatenate((xic0b,xic2b))
 	for j in range(0,nbin):
 		xij = xic[j]
 		for k in range(0,nbin):
@@ -224,15 +170,15 @@ for i in range(0,len(scb)):
 
 abdir = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/jmena/'
 xid0 = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmax] #just look at first mock
-xid2 = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmax] #just look at first mock
+xid2 = np.loadtxt(abdir+'Xi_2_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmax] #just look at first mock
 xid = np.concatenate((xid0,xid2))
 
 xid0b = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmaxb] #just look at first mock
-xid2b = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmaxb] #just look at first mock
+xid2b = np.loadtxt(abdir+'Xi_2_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmaxb] #just look at first mock
 xidb = np.concatenate((xid0b,xid2b))
 fout = 'LRGabcutsky0'+str(zmin)+str(zmax)+wm+str(bs)
 bf.Xism_arat_1C_an(xid,invc,rl,mod,xidb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
-bf.BAOfit.plot_2dlik(os.environ['HOME']+'/DESImockbaofits/2Dbaofits/arat'+fout+'1covchi.dat')
+bf.plot_2dlik(os.environ['HOME']+'/DESImockbaofits/2Dbaofits/arat'+fout+'1covchi.dat')
 
 sys.exit()
 

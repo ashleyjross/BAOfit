@@ -192,7 +192,7 @@ invcb = np.linalg.pinv(covb) #the inverse covariance matrix to get the bias valu
 #fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
 wm = str(sfog)+str(dperp)+str(drad)
 mod = 'DESI0.4'+wm+'15.00.dat'
-fout = 'LRGEZxiave'+str(zmin)+str(zmax)+wm+str(bs)
+
 
 #bias priors, log around best fit up to rmaxb
 Bp = 100#0.4
@@ -222,9 +222,23 @@ for i in range(0,len(scb)):
     rlb.append(rbc) 
 
 
-bf.Xism_arat_1C_an(xiave,invc,rl,mod,xiaveb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
+abdir = '/global/cfs/cdirs/desi/cosmosim/KP45/MC/Clustering/AbacusSummit/CutSky/LRG/Xi/jmena/'
+xid0 = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmax] #just look at first mock
+xid2 = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmax] #just look at first mock
+xid = np.concatenate((xid0,xid2))
+
+xid0b = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmaxb] #just look at first mock
+xid2b = np.loadtxt(abdir+'Xi_0_zmin'+str(zmin)+'_zmax'+str(zmax)+'.txt').transpose()[0][indmin:indmaxb] #just look at first mock
+xidb = np.concatenate((xid0b,xid2b))
+fout = 'LRGabcutsky0'+str(zmin)+str(zmax)+wm+str(bs)
+bf.Xism_arat_1C_an(xid,invc,rl,mod,xidb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
+bf.BAOfit.plot_2dlik(os.environ['HOME']+'/DESImockbaofits/2Dbaofits/arat'+fout+'1covchi.dat')
 
 sys.exit()
+
+fout = 'LRGEZxiave'+str(zmin)+str(zmax)+wm+str(bs)
+bf.Xism_arat_1C_an(xiave,invc,rl,mod,xiaveb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
+
 
 rl = np.array(rl)
 sbaotemp = str(sfog)+str(dperp)+str(drad)

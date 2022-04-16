@@ -195,8 +195,8 @@ mod = 'DESI0.4'+wm+'15.00.dat'
 fout = 'LRGEZxiave'+str(zmin)+str(zmax)+wm+str(bs)
 
 #bias priors, log around best fit up to rmaxb
-Bp = 0.4
-Bt = 0.4
+Bp = 100#0.4
+Bt = 100#0.4
 
 spa = .001
 mina = .8

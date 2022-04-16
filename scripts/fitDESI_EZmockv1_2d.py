@@ -132,8 +132,8 @@ for i in range(0,len(xiave)):
 # plt.show()
 # sys.exit()
 
-invc = np.linalg.pinv(cov) #the inverse covariance matrix to pass to the code
-invcb = np.linalg.pinv(covb) #the inverse covariance matrix to get the bias values to pass to the code
+invc = np.linalg.inv(cov) #the inverse covariance matrix to pass to the code
+invcb = np.linalg.inv(covb) #the inverse covariance matrix to get the bias values to pass to the code
 #mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
 #fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
 wm = str(sfog)+str(dperp)+str(drad)
@@ -179,6 +179,10 @@ xidb = np.concatenate((xid0b,xid2b))
 fout = 'LRGabcutsky0'+str(zmin)+str(zmax)+wm+str(bs)
 bf.Xism_arat_1C_an(xid,invc,rl,mod,xidb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
 bf.plot_2dlik(os.environ['HOME']+'/DESImockbaofits/2Dbaofits/arat'+fout+'1covchi.dat')
+modl = np.loadtxt(outdir+'ximod'+fout+'.dat')
+plt.errorbar(sc,sc**2.*xid,sc**2.*xistd,fmt='ro')
+plt.plot(sc,sc**2.*modl[1],'k-')
+plt.show()
 
 sys.exit()
 

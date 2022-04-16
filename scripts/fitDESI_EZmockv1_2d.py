@@ -222,7 +222,7 @@ for i in range(0,len(scb)):
     rlb.append(rbc) 
 
 
-bf.Xism_arat_1C_an(xiave,invc,rl,mod,dvb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
+bf.Xism_arat_1C_an(xiave,invc,rl,mod,xiaveb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
 
 sys.exit()
 

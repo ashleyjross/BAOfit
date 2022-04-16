@@ -827,6 +827,7 @@ class baofit3D_ellFull_1cov:
 
 
 def plot_2dlik(file):
+	from matplotlib import pyplot as plt
 	chicol=2
 	col1name=r'$\alpha_{||}$'
 	col2name=r'$\alpha_{\perp}$'
@@ -845,7 +846,7 @@ def plot_2dlik(file):
 	w = (chi2-np.min(chi2)) < 1
 	indmin = np.argmin(chi2)
 	print(col1name+'='+str(ma1)+'+/-'+str(sig1))
-	print(col1name+'='+str(ma2)+'+/-'+str(sig2))
+	print(col2name+'='+str(ma2)+'+/-'+str(sig2))
 	print('correlation is '+str(crp/(sig1*sig2)))
 
 	#plot 1D

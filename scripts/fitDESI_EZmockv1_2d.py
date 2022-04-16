@@ -99,8 +99,10 @@ ells = (0, 2)
 s, xiell = rebinned(ells=ells, return_sep=True)
 indmin = 0
 indmax = len(s)
+indmaxb = len(s)
 sm = 0
 sx = 0
+sxb = 0
 for i in range(0,len(s)):
     if s[i] > rmin and sm == 0:
         indmin = i
@@ -108,11 +110,18 @@ for i in range(0,len(s)):
     if s[i] > rmax and sx == 0:
         indmax = i
         sx = 1
+    if s[i] > rmaxb and sxb == 0:
+        indmaxb = i
+        sxb = 1
 print(indmin,indmax)        
 nbin = 2*(indmax-indmin)
 print(nbin)
 xiave = np.zeros((nbin))
 cov = np.zeros((nbin,nbin))
+nbinb = 2*(indmaxb-indmin)
+print(nbibn)
+xiaveb = np.zeros((nbinb))
+covb = np.zeros((nbinb,nbinb))
 
 Ntot = 0
 fac = 1.
@@ -124,9 +133,14 @@ for i in range(1,Nmock+1):
 	xic2 = rebinned(ells=ells)[1][indmin:indmax]
 	xic = np.concatenate((xic0,xic2))
 	xiave += xic
+	xic0b = rebinned(ells=ells)[0][indmin:indmaxb]
+	xic2b = rebinned(ells=ells)[1][indmin:indmaxb]
+	xicb = np.concatenate((xic0b,xic2b))
+	xiaveb += xic
 	Ntot += 1.
 print( Ntot)        
 xiave = xiave/float(Ntot)
+xiaveb = xiaveb/float(Ntot)
 for i in range(1,Nmock+1):
 	nr = '_'+str(i)
 	result = pycorr.TwoPointCorrelationFunction.load(dirm+fnm+nr+'.npy')
@@ -134,14 +148,24 @@ for i in range(1,Nmock+1):
 	xic0 = rebinned(ells=ells)[0][indmin:indmax]
 	xic2 = rebinned(ells=ells)[1][indmin:indmax]
 	xic = np.concatenate((xic0,xic2))
+	xic0b = rebinned(ells=ells)[0][indmin:indmaxb]
+	xic2b = rebinned(ells=ells)[1][indmin:indmaxb]
+	xicb = np.concatenate((xic0,xic2))
 	for j in range(0,nbin):
 		xij = xic[j]
 		for k in range(0,nbin):
 			xik = xic[k]
 			cov[j][k] += (xij-xiave[j])*(xik-xiave[k])
+	for j in range(0,nbinb):
+		xij = xicb[j]
+		for k in range(0,nbinb):
+			xik = xibc[k]
+			covb[j][k] += (xij-xiaveb[j])*(xik-xiaveb[k])
 
-cov = cov/float(Ntot)                   
+cov = cov/float(Ntot)             
+covb = covb/float(Ntot)      
 sc = np.concatenate((s[indmin:indmax],s[indmin:indmax]))
+scb = np.concatenate((s[indmin:indmaxb],s[indmin:indmaxb]))
 #return cov
 
 #cov = get_xi0cov()
@@ -151,26 +175,53 @@ for i in range(0,len(xiave)):
      xistd.append(np.sqrt(cov[i][i]))
      for j in range(0,len(xiave)):
          covn[i][j] = cov[i][j]/np.sqrt(cov[i][i]*cov[j][j])
-plt.errorbar(sc,sc**2.*xiave,sc**2.*np.array(xistd))
-plt.show()
-invcov = linalg.inv(cov)
-#plt.imshow(invcov)
-plt.imshow(covn)
-plt.show()
-sys.exit()
+# plt.errorbar(sc,sc**2.*xiave,sc**2.*np.array(xistd))
+# plt.show()
+# invcov = linalg.inv(cov)
+# #plt.imshow(invcov)
+# plt.imshow(covn)
+# plt.show()
+# sys.exit()
 
+invc = np.linalg.pinv(cov) #the inverse covariance matrix to pass to the code
+invcb = np.linalg.pinv(covb) #the inverse covariance matrix to get the bias values to pass to the code
+#mod = 'Challenge_matterpower0.5933.058.515.00.dat' #BAO template used		
+#fout = 'desi_challeng1_ajr_prerec_0.5933.058.515.00'
+wm = str(sfog)+str(dperp)+str(drad)
+mod = 'DESI0.4'+wm+'15.00.dat'
+fout = 'LRGEZxiave'+str(zmin)+str(zmax)+wm+str(bs)
 
+#bias priors, log around best fit up to rmaxb
+Bp = 0.4
+Bt = 0.4
+
+spa = .001
+mina = .8
+maxa = 1.2
+outdir = os.environ['HOME']+'/DESImockbaofits/'
 
 rl = []
-nbin = 0
-for i in range(0,len(s)):
-    r = s[i]
+#nbin = 0
+for i in range(0,len(sc)):
+    r = sc[i]
     #correct for pairs should have slightly larger average pair distance than the bin center
     #this assumes mid point of bin is being used and pairs come from full 3D volume
     rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) 
     rl.append(rbc) 
-    if rbc > rmin and rbc < rmax:
-        nbin += 1
+
+rlb = []
+#nbin = 0
+for i in range(0,len(scb)):
+    r = scb[i]
+    #correct for pairs should have slightly larger average pair distance than the bin center
+    #this assumes mid point of bin is being used and pairs come from full 3D volume
+    rbc = .75*((r+bs/2.)**4.-(r-bs/2.)**4.)/((r+bs/2.)**3.-(r-bs/2.)**3.) 
+    rlb.append(rbc) 
+
+
+bf.Xism_arat_1C_an(xiave,invc,rl,mod,dvb,invcb,rlb,verbose=True,Bp=Bp,Bt=Bt,fout=fout,dirout=outdir)
+
+sys.exit()
 
 rl = np.array(rl)
 sbaotemp = str(sfog)+str(dperp)+str(drad)
@@ -178,7 +229,7 @@ mod = np.loadtxt('BAOtemplates/xi0DESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
 modsm = np.loadtxt('BAOtemplates/xi0smDESI0.4'+sbaotemp+'15.00.dat').transpose()[1]
 
 spa=.001
-outdir = os.environ['HOME']+'/DESImockbaofits/'
+
 
 #do abacus cut
 

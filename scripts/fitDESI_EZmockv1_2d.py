@@ -5,15 +5,24 @@ import sys
 from matplotlib import pyplot as plt
 import numpy.linalg as linalg
 
+import argparse
+
 import pycorr
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--zmin", help="minimum redshift",default=0.8)
+parser.add_argument("--zmax", help="maximum redshift",default=1.1)
+parser.add_argument("--gentemp", help="whether or not to generate BAO templates",default=False)
+args = parser.parse_args()
+
 
 rmin = 50
 rmax = 150
 rmaxb = 80.
 binc = 0
 
-zmin = 0.8
-zmax = 1.1
+zmin = args.zmin
+zmax = args.zmax
 bs = 4
 
 sfog = 3 #fog velocity term, 3 is kind of cannonical
@@ -31,8 +40,8 @@ Nmock = 1000
 #sp is the spacing in Mpc/h of the templates that get written out, most of the rest of the code assumes 1
 #BAO and nowiggle templates get written out for xi0,xi2,xi4 (2D code reconstructions xi(s,mu) from xi0,xi2,xi4)
 
-gentemp = False
-if gentemp:
+
+if args.gentemp:
     bf.mkxifile_3dewig(sp=1.,v='y',pkfile='DESI',mun=0,beta=0.4,sfog=sfog,sigt=dperp,sigr=drad,sigs=15.)
 
 #sys.exit()

@@ -185,7 +185,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
         sigzc = d.cHz(z)*sigz
     
     norm = 1
-    if file != 'DESI':
+    if file != 'DESI' and file != 'BOSS':
         kl = f[0]
         pml = f[1]
         norm = pml[0]/s.Psmooth(kl[0],0)
@@ -198,7 +198,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 
     for i in range(0,len(kl)):
         k = kl[i]
-        if file !='DESI':
+        if file !='DESI' and fiile != 'BOSS':
             pk = pml[i]*mult
         else:
             pk = pkv[i]
@@ -210,7 +210,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
         pksm4 = 0
         if file == 'Pk_MICEcosmology_z0_Plin_Pnowig':
             pksm = float(f[i].split()[2])*mult
-        elif file == 'DESI':
+        elif file == 'DESI' and file != 'BOSS':
             pksm = pksmv[i]
         else:   
             pksm = s.Psmooth(k,0)*norm

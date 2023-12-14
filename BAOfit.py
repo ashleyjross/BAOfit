@@ -146,7 +146,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
         pknow = PowerSpectrumBAOFilter(pk, engine='wallish2018').smooth_pk_interpolator()
         pksmv = pknow(kl)
     if file == 'BOSS':
-        from cosmoprimo.fiducial import DESI
+        from cosmoprimo.fiducial import BOSS
         from cosmoprimo import PowerSpectrumBAOFilter
         cosmo = BOSS()
         pkz = cosmo.get_fourier().pk_interpolator()

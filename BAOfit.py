@@ -210,7 +210,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
         pksm4 = 0
         if file == 'Pk_MICEcosmology_z0_Plin_Pnowig':
             pksm = float(f[i].split()[2])*mult
-        elif file == 'DESI' and file != 'BOSS':
+        elif file == 'DESI' or file == 'BOSS':
             pksm = pksmv[i]
         else:   
             pksm = s.Psmooth(k,0)*norm

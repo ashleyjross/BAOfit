@@ -198,7 +198,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
 
     for i in range(0,len(kl)):
         k = kl[i]
-        if file !='DESI' and fiile != 'BOSS':
+        if file !='DESI' and file != 'BOSS':
             pk = pml[i]*mult
         else:
             pk = pkv[i]

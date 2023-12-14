@@ -138,7 +138,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
     if file == 'DESI':
         from cosmoprimo.fiducial import DESI
         from cosmoprimo import PowerSpectrumBAOFilter
-        cosmo = DESI()
+        cosmo = DESI(engine='class')
         pkz = cosmo.get_fourier().pk_interpolator()
         pk = pkz.to_1d(z=0)
         kl = np.loadtxt(dir+'Challenge_matterpower.dat').transpose()[0] #this k spacing is known to work well
@@ -148,7 +148,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
     if file == 'BOSS':
         from cosmoprimo.fiducial import BOSS
         from cosmoprimo import PowerSpectrumBAOFilter
-        cosmo = BOSS()
+        cosmo = BOSS(engine='class')
         pkz = cosmo.get_fourier().pk_interpolator()
         pk = pkz.to_1d(z=0)
         kl = np.loadtxt(dir+'Challenge_matterpower.dat').transpose()[0] #this k spacing is known to work well

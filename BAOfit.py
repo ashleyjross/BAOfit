@@ -255,7 +255,7 @@ def pk3elldfile_dewig(file='Challenge_matterpower',beta=0.4,sigt=3.0,sigr=3.0,sf
         psm0l.append(pksm0)
         psm2l.append(pksm2)
         psm4l.append(pksm4)
-        print(pk0,pksm0,dpk)
+        #print(pk0,pksm0,dpk)
 
         if pw == 'y':
             fo.write(str(k)+' '+str(pk0)+' '+str(pk2)+' '+str(pk4)+' '+str(pksm0)+' '+str(pksm2)+' '+str(pksm4)+' '+str(pk)+' '+str(pksm)+'\n')
